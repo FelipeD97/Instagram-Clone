@@ -1,3 +1,21 @@
+# Instagram Clone
+
+## Description
+
+This application is simply a clone of Instagram. It allows for different users to log in and create their own personal posts. Other users keep up with the what other users are posting and comment on these posts.
+
+## Technologies Used
+
+1. React
+2. Firebase
+3. CSS
+
+## Features
+
+* Users can create an account, and log in and out of this account freely.
+* Users can create images with a caption.
+* Users can comment on different posts other users have made.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

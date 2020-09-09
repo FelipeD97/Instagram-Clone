@@ -183,8 +183,6 @@ function App() {
         </div>
       )}
       </div>
-
-      <h1>Hello! Lets create an Instagram Clone</h1>
       <div className="app_posts">
         <div className="app_postsLeft">
           {
@@ -195,7 +193,7 @@ function App() {
         </div>
         <div className="app_postsRight">
           <InstagramEmbed
-                  url='https://instagr.am/p/Zw9o4/'
+                  url='https://www.instagram.com/p/B0Je5BAhK_9/'
                   maxWidth={320}
                   hideCaption={false}
                   containerTagName='div'
@@ -208,8 +206,6 @@ function App() {
           />
         </div>
       </div>
-
-      
 
       {user?.displayName ? (
               <ImageUpload username={user.displayName} />
