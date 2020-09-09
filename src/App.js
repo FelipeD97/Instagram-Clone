@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import { Button, Input } from '@material-ui/core';
 import ImageUpload from "./ImageUpload";
+import InstagramEmbed from "react-instagram-embed";
 
 function getModalStyle() {
   const top = 50;
@@ -63,7 +64,8 @@ function App() {
   }, [user, username]);
   
   useEffect(() => {
-    db.collection('posts').onSnapshot(snapshot => {
+    db.collection('posts').orderBy("timestamp", "desc").onSnapshot(snapshot => {
+      // every time a new post is made, this code runs
       setPosts(snapshot.docs.map(doc => ({
         id: doc.id,
         post: doc.data()
@@ -99,12 +101,6 @@ function App() {
 
   return (
     <div className="app">
-
-      {user?.displayName ? (
-        <ImageUpload username={user.displayName} />
-      ) : (
-        <h3>Sorry you need to login to upload</h3>
-      )}
       
       <Modal
         open={open}
@@ -178,9 +174,7 @@ function App() {
         src="https://cdn.worldvectorlogo.com/logos/instagram-2.svg" 
         alt="" 
         />
-      </div>
-
-      {user ? (
+        {user ? (
         <Button onClick={() => auth.signOut()}>Log Out</Button>
       ) : (
         <div className="app_loginContainer">
@@ -188,14 +182,40 @@ function App() {
         <Button onClick={() => setOpen(true)}>Sign Up</Button>
         </div>
       )}
+      </div>
 
       <h1>Hello! Lets create an Instagram Clone</h1>
+      <div className="app_posts">
+        <div className="app_postsLeft">
+          {
+            posts.map(({id, post}) => (
+              <Post key={id} postId={id} user={user} username={post.username} caption={post.caption} imageUrl={post.imageUrl} />
+            ))
+          }
+        </div>
+        <div className="app_postsRight">
+          <InstagramEmbed
+                  url='https://instagr.am/p/Zw9o4/'
+                  maxWidth={320}
+                  hideCaption={false}
+                  containerTagName='div'
+                  protocol=''
+                  injectScript
+                  onLoading={() => {}}
+                  onSuccess={() => {}}
+                  onAfterRender={() => {}}
+                  onFailure={() => {}}
+          />
+        </div>
+      </div>
 
-      {
-        posts.map(({id, post}) => (
-          <Post key={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl} />
-        ))
-      }
+      
+
+      {user?.displayName ? (
+              <ImageUpload username={user.displayName} />
+            ) : (
+              <h3>Sorry you need to login to upload</h3>
+            )}
     </div>
   );
 }
